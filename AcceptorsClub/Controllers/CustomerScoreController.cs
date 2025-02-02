@@ -31,6 +31,9 @@ public class CustomerScoreController : ControllerBase
         return Ok(result);
     }
 
+    /// <summary>
+    /// OperationType is a enum value 0 means charge+ and 1 means spend-
+    /// </summary>
     [HttpPost("AddCustomerScore")]
     public async Task<IActionResult> AddCustomerScore([FromBody] CustomerScoreCommand customerScore)
     {

@@ -32,6 +32,7 @@ public class CustomerScoreCommandHandler : IRequestHandler<CustomerScoreCommand,
             Score = request.Score,
             NationalCode = request.NationalCode,
             OperationType = request.OperationType,
+            Key = Guid.NewGuid()
         };
         await _context.CustomerScore.AddAsync(customer);
         await _context.SaveChangesAsync();
