@@ -11,6 +11,11 @@ public class ApplicationDbContext : DbContext
         
     }
     public DbSet<CustomerScore> CustomerScore { get; set; }
+    public DbSet<ScorePlan> ScorePlan { get; set; }
+    public DbSet<Lottery> Lottery { get; set; }
+    public DbSet<Survey> Survey { get; set; }
+    // public DbSet<Customer> Customer { get; set; }
+    // public DbSet<CustomerWinnerLottery> CustomerWinnerLottery { get; set; }
 
      protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -22,6 +27,13 @@ public class ApplicationDbContext : DbContext
         {
             entity.HasNoKey();
         });
+
+        // modelBuilder.Entity<Lottery>()
+        //     .HasMany(c => c.LotteryWinners)
+        //     .WithOne(o => o.Lottery)
+        //     .HasForeignKey(o => o.LotteryId);
+
+        // modelBuilder.Entity<CustomerWinnerLottery>().HasOne(o => o.Customer).WithMany(o => o.LotteryWinners).HasForeignKey(x => x.CustomerId);
 
         base.OnModelCreating(modelBuilder);
     }

@@ -40,4 +40,22 @@ public class CustomerScoreController : ControllerBase
         var result = await _mediator.Send(customerScore);
         return Ok(result);
     }
+    [HttpGet("GetScorePlan")]
+    public async Task<IActionResult> GetScorePlan()
+    {
+        var result = await _mediator.Send(new GetALLScorePlanQuery());
+        return Ok(result);
+    }
+    [HttpGet("GetActiveLotteries")]
+    public async Task<IActionResult> GetActiveLotteries()
+    {
+        var result = await _mediator.Send(new GetLotteryListQuery());
+        return Ok(result);
+    }
+    [HttpGet("GetActiveCompetitions")]
+    public async Task<IActionResult> GetActiveCompetitions()
+    {
+        var result = await _mediator.Send(new GetCompetitionQuery());
+        return Ok(result);
+    }
 }
