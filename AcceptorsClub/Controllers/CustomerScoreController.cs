@@ -20,6 +20,10 @@ public class CustomerScoreController : ControllerBase
     [HttpGet("CustomerScoreList")]
     public async Task<IActionResult> CustomerScoreList([FromQuery] string nationalCode)
     {
+        if(string.IsNullOrEmpty(nationalCode) || nationalCode.Length < 10)
+        {
+            return BadRequest("invalid national code");
+        }
         var result = await _mediator.Send(new CustomerScoreQuery(nationalCode));
         return Ok(result);
     }
@@ -27,6 +31,10 @@ public class CustomerScoreController : ControllerBase
     [HttpGet("SumCustomerScore")]
     public async Task<IActionResult> SumCustomerScore([FromQuery] string nationalCode)
     {
+        if(string.IsNullOrEmpty(nationalCode) || nationalCode.Length < 10)
+        {
+            return BadRequest("invalid national code");
+        }
         var result = await _mediator.Send(new SumCustomerScoreQuery(nationalCode));
         return Ok(result);
     }
@@ -37,6 +45,10 @@ public class CustomerScoreController : ControllerBase
     [HttpPost("AddCustomerScore")]
     public async Task<IActionResult> AddCustomerScore([FromBody] CustomerScoreCommand customerScore)
     {
+        if(string.IsNullOrEmpty(customerScore.NationalCode) || customerScore.NationalCode.Length < 10)
+        {
+            return BadRequest("invalid national code");
+        }
         var result = await _mediator.Send(customerScore);
         return Ok(result);
     }
