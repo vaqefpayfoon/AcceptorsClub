@@ -14,7 +14,7 @@ public class ApplicationDbContext : DbContext
     public DbSet<ScorePlan> ScorePlan { get; set; }
     public DbSet<Lottery> Lottery { get; set; }
     public DbSet<Survey> Survey { get; set; }
-    // public DbSet<Customer> Customer { get; set; }
+    public DbSet<Customer> Customer { get; set; }
     // public DbSet<CustomerWinnerLottery> CustomerWinnerLottery { get; set; }
 
      protected override void OnModelCreating(ModelBuilder modelBuilder)

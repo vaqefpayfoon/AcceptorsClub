@@ -47,7 +47,7 @@ public class CustomerScoreQueryHandler : IRequestHandler<CustomerScoreQuery, IEn
                 [dbo].[Customer] ON [dbo].[CustomerScore].NationalCode = [dbo].[Customer].NationalCode
             LEFT JOIN 
                 CustomerEvaluationFormInformation ON CustomerEvaluationFormInformation.NationalCode = [dbo].[Customer].NationalCode
-                WHERE [CustomerScore].[IsDeleted] = 0 AND [CustomerScore].NationalCode = '0013741594'
+                WHERE [CustomerScore].[IsDeleted] = 0 AND [CustomerScore].NationalCode = '{request.NationalCode}'
             GROUP BY 
                 [dbo].[CustomerScore].[NationalCode],
                 [dbo].[Customer].FirstName,
