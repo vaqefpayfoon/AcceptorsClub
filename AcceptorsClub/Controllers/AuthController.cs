@@ -3,6 +3,7 @@ using AcceptorsClub.Models;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
+using System.Diagnostics;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
@@ -14,10 +15,13 @@ public class AuthController : ControllerBase
 {
     private readonly IConfiguration _configuration;
     private readonly IMediator _mediator;
-    public AuthController(IConfiguration configuration, IMediator mediator)
+    private readonly List<LoginPazirandegan> logins;
+
+    public AuthController(IConfiguration configuration, IMediator mediator,List<LoginPazirandegan> logins)
     {
         _configuration = configuration;
         _mediator = mediator;
+        this.logins = logins;
     }
 
     [HttpPost]
@@ -70,11 +74,27 @@ public class AuthController : ControllerBase
             };
             //tokenDescriptor.Claims.Add(ClaimTypes.NameIdentifier, id.ToString());
             var token = tokenHandler.CreateToken(tokenDescriptor);
-            return Ok(new { token = tokenHandler.WriteToken(token), customer = result });
+            //return Ok(new { token = tokenHandler.WriteToken(token), customer = result });
+
+            var login = new LoginPazirandegan() { Key = Guid.NewGuid().ToString(), Token = tokenHandler.WriteToken(token) };
+            logins.Add(login);
+            return Ok(_configuration["acceptors:address"] + "?key=" + login.Key);
         }
         catch
         {
             return NotFound("national code not found please register");
         }
+    }
+
+    [HttpGet("CallTokenWithKey")]
+    public async Task<IActionResult> GetToken([FromQuery]string key)
+    {
+        var login = logins.FirstOrDefault(c => c.Key == key);
+
+        if (login == null)
+            return NotFound();
+
+
+        return Ok(login.Token);
     }
 }
