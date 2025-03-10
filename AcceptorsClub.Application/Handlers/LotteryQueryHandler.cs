@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using AcceptorsClub.Application.Responses;
+using AcceptorsClub.Core.Models;
 using AcceptorsClub.Infrastructure;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
@@ -24,7 +25,17 @@ public class LotteryQueryHandler : IRequestHandler<GetLotteryListQuery, IEnumera
         
         var lottery = await _context.Lottery.Where(x => x.FromDate <= DateTime.Now.Date && x.ToDate >= DateTime.Now.Date).ToListAsync();
 
-        var winners = await _context.CustomerWinnerLottery.OrderByDescending(x => x.CreatedAt).Take(100).ToListAsync();
+        var winners = await _context.CustomerWinnerLottery.OrderByDescending(x => x.CreatedAt).Take(100).Join(
+            _context.Customer,
+            winner => winner.CustomerId,
+            customer => customer.Id,
+            (winner, customer) => new CustomerWinnerResponse
+            {
+                FullName = customer.FirstName.Trim() + customer.LastName.Trim(),
+                NationalCode = customer.NationalCode,
+                Mobile = customer.Mobile,
+            }
+        ).ToListAsync();
 
         var result = lottery.Select(x => new LotteryResponseModel
         {
