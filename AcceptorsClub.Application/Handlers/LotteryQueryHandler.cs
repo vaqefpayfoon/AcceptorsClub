@@ -21,21 +21,10 @@ public class LotteryQueryHandler : IRequestHandler<GetLotteryListQuery, IEnumera
     public async Task<IEnumerable<LotteryResponseModel>> Handle(GetLotteryListQuery request, CancellationToken cancellationToken)
     {
 
-        // var lottery = await _context.Lottery.Include(x => x.LotteryWinners).ThenInclude(x => x.Customer).ToListAsync();
-
-        // var result = scorePlan.Select(x => new LotteryResponseModel
-        // {
-        //     Id = x.Id,
-        //     Key = x.Key,
-        //     Title = x.Title,
-        //     Description = x.Description,
-        //     FromDate = x.FromDate,
-        //     ToDate = x.ToDate,
-        //     BaseScore = x.BaseScore,
-        //     FileName = x.FileName,
-        //     CustomerWinners = x.LotteryWinners
-        // });
+        
         var lottery = await _context.Lottery.Where(x => x.FromDate <= DateTime.Now.Date && x.ToDate >= DateTime.Now.Date).ToListAsync();
+
+        var winners = await _context.CustomerWinnerLottery.OrderByDescending(x => x.CreatedAt).Take(100).ToListAsync();
 
         var result = lottery.Select(x => new LotteryResponseModel
         {
@@ -46,7 +35,8 @@ public class LotteryQueryHandler : IRequestHandler<GetLotteryListQuery, IEnumera
             FromDate = x.FromDate,
             ToDate = x.ToDate,
             BaseScore = x.BaseScore,
-            FileName = x.FileName
+            FileName = x.FileName,
+            CustomerWinners = winners
         });
         return result;
     }
