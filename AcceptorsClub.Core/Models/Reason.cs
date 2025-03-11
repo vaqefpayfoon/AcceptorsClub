@@ -30,7 +30,6 @@ namespace AcceptorsClub.Core.Models
         TransferScore = 10,
         [Description("باشگاه پذیرندگان /ثبت نام")]
         AcceptorsClubSignUp = 100,
-
         [Description("باشگاه پذیرندگان /دعوت از دوستان")]
         AcceptorsClubInvitation = 101,
         [Description("باشگاه پذیرندگان /روز تولد")]
@@ -44,8 +43,10 @@ namespace AcceptorsClub.Core.Models
         [Description("باشگاه پذیرندگان /انتقادات و پیشنهادات	")]
         AcceptorsClubSuggestion = 106,
         [Description("باشگاه پذیرندگان /ثبت درخواست پایانه فروشگاهی-درگاه اینترنتی")]
-        AcceptorsClubTerminal = 108,
+        AcceptorsClubTerminal = 107,
         [Description("باشگاه پذیرندگان /تکمیل پروفایل")]
-        AcceptorsClubProfile = 109,
+        AcceptorsClubProfile = 108,
+        [Description("باشگاه پذیرندگان /تبدیل امتیاز به موجودی کیف پول")]
+        AcceptorsClubConvert = 109
     }
 }

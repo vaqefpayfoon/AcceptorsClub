@@ -49,6 +49,7 @@ public class CustomerScoreQueryHandler : IRequestHandler<CustomerScoreQuery, IEn
                 WHEN Reason = 106 THEN N'باشگاه پذیرندگان /انتقادات و پیشنهادات'
                 WHEN Reason = 107 THEN N'باشگاه پذیرندگان /ثبت درخواست پایانه فروشگاهی/درگاه اینترنتی	'
                 WHEN Reason = 108 THEN N'باشگاه پذیرندگان /تکمیل پروفایل'
+                WHEN Reason = 109 THEN N'باشگاه پذیرندگان /تبدیل امتیاز به موجودی کیف پول'
 
                 ELSE N'موتور امتیازی' END AS Reason
             FROM 

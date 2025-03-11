@@ -1,5 +1,6 @@
 using AcceptorsClub.Application;
 using AcceptorsClub.Application.Commands;
+using AcceptorsClub.Core.Models;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -20,7 +21,7 @@ public class CustomerScoreController : ControllerBase
     [HttpGet("CustomerScoreList")]
     public async Task<IActionResult> CustomerScoreList([FromQuery] string nationalCode)
     {
-        if(string.IsNullOrEmpty(nationalCode) || nationalCode.Length < 10)
+        if (string.IsNullOrEmpty(nationalCode) || nationalCode.Length < 10)
         {
             return BadRequest("invalid national code");
         }
@@ -31,7 +32,7 @@ public class CustomerScoreController : ControllerBase
     [HttpGet("SumCustomerScore")]
     public async Task<IActionResult> SumCustomerScore([FromQuery] string nationalCode)
     {
-        if(string.IsNullOrEmpty(nationalCode) || nationalCode.Length < 10)
+        if (string.IsNullOrEmpty(nationalCode) || nationalCode.Length < 10)
         {
             return BadRequest("invalid national code");
         }
@@ -45,9 +46,20 @@ public class CustomerScoreController : ControllerBase
     [HttpPost("AddCustomerScore")]
     public async Task<IActionResult> AddCustomerScore([FromBody] CustomerScoreCommand customerScore)
     {
-        if(string.IsNullOrEmpty(customerScore.NationalCode) || customerScore.NationalCode.Length < 10)
+        if (string.IsNullOrEmpty(customerScore.NationalCode) || customerScore.NationalCode.Length < 10)
         {
             return BadRequest("invalid national code");
+        }
+        if (customerScore.Reason == Reason.AcceptorsClubConvert)
+        {
+            var total = await _mediator.Send(new SumCustomerScoreQuery(customerScore.NationalCode));
+            if (total.Score.HasValue)
+            {
+                if (Math.Abs(customerScore.Score) > total.Score)
+                {
+                    return BadRequest("requested score in not enough");
+                }
+            }
         }
         var result = await _mediator.Send(customerScore);
         return Ok(result);
