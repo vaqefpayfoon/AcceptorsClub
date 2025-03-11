@@ -28,7 +28,24 @@ namespace AcceptorsClub.Core.Models
         SurveyAnswer=9,
         [Description("انتقال امتیاز")]
         TransferScore = 10,
-        [Description("باشگاه پذیرندگان")]
-        AcceptorsClub = 11
+        [Description("باشگاه پذیرندگان /ثبت نام")]
+        AcceptorsClubSignUp = 100,
+
+        [Description("باشگاه پذیرندگان /دعوت از دوستان")]
+        AcceptorsClubInvitation = 101,
+        [Description("باشگاه پذیرندگان /روز تولد")]
+        AcceptorsClubBirthDate = 102,
+        [Description("باشگاه پذیرندگان /شرکت در نظرسنجی دوره ای	")]
+        AcceptorsClubSurvey = 103,
+        [Description("باشگاه پذیرندگان /شرکت نظر سنجی امتیازی")]
+        AcceptorsClubSurveyScore = 104,
+        [Description("باشگاه پذیرندگان /ثبت تیکت")]
+        AcceptorsClubTicket = 105,
+        [Description("باشگاه پذیرندگان /انتقادات و پیشنهادات	")]
+        AcceptorsClubSuggestion = 106,
+        [Description("باشگاه پذیرندگان /ثبت درخواست پایانه فروشگاهی-درگاه اینترنتی")]
+        AcceptorsClubTerminal = 108,
+        [Description("باشگاه پذیرندگان /تکمیل پروفایل")]
+        AcceptorsClubProfile = 109,
     }
 }

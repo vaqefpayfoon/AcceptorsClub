@@ -40,10 +40,20 @@ public class CustomerScoreQueryHandler : IRequestHandler<CustomerScoreQuery, IEn
                 WHEN Reason = 9 THEN N'نظرسنجی / مسابقه'
                 WHEN Reason = 10 THEN N'انتقال امتیاز'
                 WHEN Reason = 11 THEN N'باشگاه پذیرندگان'
+                WHEN Reason = 100 THEN N'باشگاه پذیرندگان /ثبت نام'
+                WHEN Reason = 101 THEN N'باشگاه پذیرندگان /دعوت از دوستان'
+                WHEN Reason = 102 THEN N'باشگاه پذیرندگان /روز تولد	'
+                WHEN Reason = 103 THEN N'باشگاه پذیرندگان /شرکت در نظرسنجی دوره ای'
+                WHEN Reason = 104 THEN N'باشگاه پذیرندگان /شرکت نظر سنجی امتیازی'
+                WHEN Reason = 105 THEN N'باشگاه پذیرندگان /ثبت تیکت'
+                WHEN Reason = 106 THEN N'باشگاه پذیرندگان /انتقادات و پیشنهادات'
+                WHEN Reason = 107 THEN N'باشگاه پذیرندگان /ثبت درخواست پایانه فروشگاهی/درگاه اینترنتی	'
+                WHEN Reason = 108 THEN N'باشگاه پذیرندگان /تکمیل پروفایل'
+
                 ELSE N'موتور امتیازی' END AS Reason
             FROM 
                 [dbo].[CustomerScore]
-            INNER JOIN 
+            LEFT JOIN 
                 [dbo].[Customer] ON [dbo].[CustomerScore].NationalCode = [dbo].[Customer].NationalCode
             LEFT JOIN 
                 CustomerEvaluationFormInformation ON CustomerEvaluationFormInformation.NationalCode = [dbo].[Customer].NationalCode

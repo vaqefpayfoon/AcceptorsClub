@@ -8,6 +8,7 @@ namespace AcceptorsClub.Application.Commands
     {
         public string NationalCode { get; set; }
         public int Score { get; set; }
+        public Reason Reason { get; set; }
         public OperationType OperationType { get; set; }
     }
 }
